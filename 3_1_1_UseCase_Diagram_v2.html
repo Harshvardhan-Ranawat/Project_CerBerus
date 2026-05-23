@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3.1.1 Use Case Diagram (UML Style)</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: white;}
+        .mermaid { margin: 0 auto; display: flex; justify-content: center; }
+        h2 { color: #333; }
+        p { color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h2>3.1.1 Use Case Diagram of Cerberus System</h2>
+    <p><i>(Re-styled to match traditional UML format with Stick Figures, Ovals, and a System Boundary Box)</i></p>
+    <br>
+    
+    <pre class="mermaid">
+flowchart LR
+    %% Style Definitions to mimic Traditional UML
+    classDef actor fill:transparent,stroke:transparent,color:black,font-size:16px,font-weight:bold;
+    classDef usecase fill:#ffffff,stroke:#333,stroke-width:1.5px,color:black,border-color:black;
+    classDef system fill:transparent,stroke:#333,stroke-width:2px,color:black,font-weight:bold;
+
+    %% Actors using unicode stick figures
+    Admin["🧍<br/>System Admin"]:::actor
+    Attacker["🧍<br/>Internal / External<br/>Attacker"]:::actor
+
+    %% System Boundary
+    subgraph Cerberus[" Cerberus IDS System "]
+        direction TB
+        UC1(["Deploy Target Honeyfile"]):::usecase
+        UC2(["Configure Autostart Rules"]):::usecase
+        UC7(["Monitor Web Dashboard"]):::usecase
+        
+        UC3(["Trigger Unauthorized SMB Access"]):::usecase
+        UC4(["Detect Event 5145 Audit"]):::usecase
+        UC5(["Calculate Threat Risk Score"]):::usecase
+        UC6(["Generate Telegram Notification"]):::usecase
+    end
+
+    %% Connections
+    Admin -------| | UC1
+    Admin -------| | UC2
+    Admin -------| | UC7
+    
+    Attacker -------| | UC3
+    
+    %% Internal triggers inside the system
+    UC3 -.->|includes| UC4
+    UC4 -.->|includes| UC5
+    UC5 -.->|includes| UC6
+    
+    UC6 -------|alerts| Admin
+    
+    class Cerberus system;
+    </pre>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#ffffff'} });
+    </script>
+</body>
+</html>

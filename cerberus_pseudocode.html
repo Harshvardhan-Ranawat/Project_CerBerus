@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Cerberus – Pseudocode</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #0d1117;
+            color: #e6edf3;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 36px 48px;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 16px;
+        }
+        header h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #e6edf3;
+        }
+        header span {
+            font-size: 0.72rem;
+            color: #8b949e;
+        }
+
+        .code-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 28px 32px;
+            line-height: 1.75;
+            font-size: 0.82rem;
+            counter-reset: line;
+        }
+
+        .line {
+            display: flex;
+            gap: 20px;
+            counter-increment: line;
+        }
+        .line::before {
+            content: counter(line);
+            color: #3d4451;
+            min-width: 24px;
+            text-align: right;
+            user-select: none;
+            font-size: 0.75rem;
+            padding-top: 1px;
+        }
+        .line:hover { background: rgba(255,255,255,0.03); border-radius: 4px; }
+
+        /* syntax colours */
+        .kw   { color: #ff7b72; }   /* keywords: FUNCTION, IF, LOOP, etc */
+        .fn   { color: #d2a8ff; }   /* function names */
+        .str  { color: #a5d6ff; }   /* string / file names */
+        .num  { color: #79c0ff; }   /* numbers */
+        .cmt  { color: #484f58; font-style: italic; } /* comments */
+        .op   { color: #8b949e; }   /* operators / punctuation */
+        .act  { color: #3fb950; }   /* action words: CALL, START, RETURN */
+        .thr  { color: #e36209; }   /* thread labels */
+        .blank { height: 6px; }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🐺 Project Cerberus — Pseudocode</h1>
+    <span>main.py &nbsp;·&nbsp; 57 lines &nbsp;·&nbsp; Honeyfile IDS</span>
+</header>
+
+<div class="code-block">
+
+    <div class="line"><span><span class="cmt">// ── CONSTANTS ──────────────────────────────────────────────────────────</span></span></div>
+    <div class="line"><span><span class="kw">DEFINE</span> <span class="str">HONEY_FILES</span> <span class="op">=</span> <span class="op">{</span> passwords.txt, confidential.docx, financial_budget_2024.xlsx, <span class="op">...</span> <span class="op">}</span>  <span class="cmt">// 10 decoys</span></span></div>
+    <div class="line"><span><span class="kw">DEFINE</span> <span class="str">RISK_SCORES</span> <span class="op">=</span> <span class="op">{</span> OPENED<span class="op">:</span><span class="num">10</span>, MODIFIED<span class="op">:</span><span class="num">40</span>, MOVED<span class="op">:</span><span class="num">60</span>, COPIED<span class="op">:</span><span class="num">70</span>, DELETED<span class="op">:</span><span class="num">90</span>, SMB_GET<span class="op">:</span><span class="num">80</span>, SMB_PUSH<span class="op">:</span><span class="num">90</span> <span class="op">}</span></span></div>
+    <div class="line"><span><span class="kw">DEFINE</span> <span class="str">LOG_FILE</span>    <span class="op">=</span> <span class="str">"logs/alerts.log"</span></span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="cmt">// ── HELPER FUNCTIONS ────────────────────────────────────────────────────</span></span></div>
+    <div class="line"><span><span class="kw">FUNCTION</span> <span class="fn">calculate_severity</span><span class="op">(</span>score<span class="op">):</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">IF</span> score <span class="op">&lt;</span> <span class="num">20</span>  <span class="op">→</span> <span class="act">RETURN</span> <span class="str">"LOW"</span>  &nbsp;<span class="op">|</span>&nbsp;  <span class="kw">IF</span> score <span class="op">&lt;</span> <span class="num">40</span>  <span class="op">→</span> <span class="act">RETURN</span> <span class="str">"HIGH"</span>  &nbsp;<span class="op">|</span>&nbsp;  <span class="kw">ELSE</span>  <span class="op">→</span> <span class="act">RETURN</span> <span class="str">"CRITICAL"</span></span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="kw">FUNCTION</span> <span class="fn">send_critical_alert</span><span class="op">(</span>severity, action, file_name, location<span class="op">):</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="act">SEND</span> email via Gmail SMTP  <span class="op">(</span>port <span class="num">587</span>, STARTTLS, App Password<span class="op">)</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="act">SEND</span> Telegram message via HTTP POST <span class="str">/sendMessage</span>  <span class="op">(</span>HTML formatted, attacker IP + filename<span class="op">)</span></span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="kw">FUNCTION</span> <span class="fn">log_event</span><span class="op">(</span>action, location, file_name<span class="op">):</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">IF</span> active SMB IPs exist <span class="kw">AND</span> action <span class="kw">IN</span> <span class="op">[</span>OPENED, MODIFIED, COPIED<span class="op">]</span><span class="op">:</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;Upgrade action <span class="op">→</span> <span class="str">SMB_PUSH</span>  <span class="op">/</span>  <span class="str">SMB_GET</span>  <span class="cmt">// remote session escalation</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;risk_score <span class="op">=</span> RISK_SCORES<span class="op">[</span>action<span class="op">]</span>  &nbsp;<span class="op">|</span>&nbsp;  severity <span class="op">=</span> <span class="fn">calculate_severity</span><span class="op">(</span>risk_score<span class="op">)</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="act">APPEND</span> timestamped record to LOG_FILE  <span class="op">(</span>user, action, file, severity, score<span class="op">)</span>  <span class="op">+</span> fsync</span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">IF</span> severity <span class="op">==</span> <span class="str">"CRITICAL"</span>  <span class="op">→</span>  <span class="act">SPAWN thread</span> <span class="op">→</span> <span class="fn">send_critical_alert</span><span class="op">()</span></span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="cmt">// ── DETECTION THREADS ───────────────────────────────────────────────────</span></span></div>
+    <div class="line"><span><span class="kw">FUNCTION</span> <span class="fn">monitor_security_logs</span><span class="op">():</span>  <span class="thr">// Thread 1 — Windows Event 5145</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">REQUIRE</span> Administrator privileges  <span class="op">|</span>  Enable audit policy: Detailed File Share</span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">LOOP</span> every <span class="num">2</span> s<span class="op">:</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;Query Windows Security Log for <span class="str">Event ID 5145</span>  <span class="op">(</span>wevtutil XML query<span class="op">)</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">FOR EACH</span> new event<span class="op">:</span>  Extract IpAddress <span class="op">+</span> RelativeTargetName from XML</span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">IF</span> file matches <span class="str">HONEY_FILES</span> <span class="kw">AND</span> debounce<span class="op">(</span><span class="num">3</span> s<span class="op">)</span> passes<span class="op">:</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="act">CALL</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"SMB_GET"</span>, file, smb_info<span class="op">=</span>attacker_IP<span class="op">)</span></span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="kw">FUNCTION</span> <span class="fn">monitor_smb_sessions</span><span class="op">():</span>  <span class="thr">// Thread 2 — Port 445 watcher</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">LOOP</span> every <span class="num">2</span> s<span class="op">:</span>  Scan all TCP connections for port <span class="num">445</span> ESTABLISHED</span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">IF</span> new remote IP found<span class="op">:</span>  <span class="act">CALL</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"SMB_ACCESS"</span>, <span class="str">"Network"</span>, ip<span class="op">)</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;Update global <span class="str">active_smb_ips</span> set</span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="kw">FUNCTION</span> <span class="fn">monitor_file_open</span><span class="op">():</span>  <span class="thr">// Thread 3 — Window title tracker</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">LOOP</span> every <span class="num">0.5</span> s<span class="op">:</span>  Read foreground window title via win32gui</span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">IF</span> title contains honeyfile keyword <span class="kw">AND</span> debounce<span class="op">(</span><span class="num">3</span> s<span class="op">)</span> passes<span class="op">:</span>  <span class="act">CALL</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"OPENED"</span><span class="op">)</span></span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="kw">FUNCTION</span> <span class="fn">monitor_realtime_typing</span><span class="op">():</span>  <span class="thr">// Thread 4 — Keystroke interceptor</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">ON</span> each keypress<span class="op">:</span>  <span class="kw">IF</span> honeyfile window in focus <span class="kw">AND</span> debounce<span class="op">(</span><span class="num">2</span> s<span class="op">):</span>  <span class="act">CALL</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"MODIFIED"</span><span class="op">)</span></span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="kw">CLASS</span> <span class="fn">HoneyFileHandler</span>  <span class="op">(</span>Watchdog FileSystemEventHandler<span class="op">):</span>  <span class="thr">// Thread 5</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">ON</span> MODIFIED<span class="op">:</span>  Hash-compare file <span class="op">→</span> <span class="act">CALL</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"MODIFIED"</span><span class="op">)</span>  or  <span class="fn">log_event</span><span class="op">(</span><span class="str">"COPIED"</span><span class="op">)</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">ON</span> DELETED<span class="op">:</span>  <span class="act">CALL</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"DELETED"</span><span class="op">)</span>  or  <span class="fn">log_event</span><span class="op">(</span><span class="str">"CLOSED"</span><span class="op">)</span>  <span class="cmt">// temp file = close event</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">ON</span> MOVED<span class="op">:</span>   Same directory <span class="op">→</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"RENAMED"</span><span class="op">)</span>  <span class="op">|</span>  Different dir <span class="op">→</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"MOVED"</span><span class="op">)</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">ON</span> CREATED<span class="op">:</span> If temp/lock file <span class="op">→</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"OPENED"</span><span class="op">)</span>  <span class="op">|</span>  Else <span class="op">→</span> add to copy candidates</span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="kw">FUNCTION</span> <span class="fn">process_copy_events</span><span class="op">():</span>  <span class="thr">// Thread 6 — MD5 hash copy detector</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">LOOP</span> every <span class="num">2</span> s<span class="op">:</span>  <span class="kw">FOR EACH</span> copy candidate older than <span class="num">2</span> s<span class="op">:</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">IF</span> MD5 hash matches any original HONEY_FILE hash<span class="op">:</span>  <span class="act">CALL</span> <span class="fn">log_event</span><span class="op">(</span><span class="str">"COPIED"</span><span class="op">)</span></span></div>
+    <div class="blank"></div>
+    <div class="line"><span><span class="cmt">// ── MAIN ENTRY POINT ────────────────────────────────────────────────────</span></span></div>
+    <div class="line"><span><span class="kw">MAIN:</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">IF</span> not Administrator  <span class="op">→</span>  Re-launch via UAC ShellExecute <span class="op">(</span>runas<span class="op">)</span>  <span class="op">→</span>  EXIT</span></div>
+    <div class="line"><span>&nbsp;&nbsp;Prevent duplicate instances via Windows named Mutex</span></div>
+    <div class="line"><span>&nbsp;&nbsp;Register <span class="str">pythonw.exe</span> in Windows Startup registry key</span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">FOR EACH</span> honeyfile in HONEY_FILES<span class="op">:</span>  Create file if missing  <span class="op">(</span>xlsx/pdf/pptx/docx/csv/txt<span class="op">)</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;Compute MD5 hash of each honeyfile <span class="op">→</span> store in <span class="str">ORIGINAL_HASHES</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="act">START</span> Watchdog observer on <span class="str">HONEY_DIR</span>  <span class="op">+</span>  spawn <span class="fn">monitor_drives</span> to watch all drive letters</span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="act">START</span> threads<span class="op">:</span> <span class="fn">process_copy_events</span>, <span class="fn">monitor_file_open</span>, <span class="fn">monitor_realtime_typing</span>,</span></div>
+    <div class="line"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">monitor_smb_sessions</span>, <span class="fn">monitor_security_logs</span>  <span class="cmt">// all daemon threads</span></span></div>
+    <div class="line"><span>&nbsp;&nbsp;<span class="kw">LOOP</span> until KeyboardInterrupt  <span class="op">→</span>  Stop observer  <span class="op">→</span>  JOIN  <span class="op">→</span>  EXIT</span></div>
+
+</div>
+
+</body>
+</html>

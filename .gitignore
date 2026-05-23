@@ -1,0 +1,33 @@
+# Project Cerberus - Git Ignore
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables & secrets (CRITICAL: Do not upload!)
+.env
+
+# Local application logs and error logs
+logs/
+*.log
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Local text files, debugging files, and generated copy/passwords test outputs
+copied1_passwords.txt
+copied2_passwords.txt
+debug.txt
+test_pythonw.py
+test_pythonw.log
+test_stdout.py
+
+# Honeyfiles directory (dynamically initialized/populated by the code)
+honeyfiles/
+
+# Virtual environments
+test_env/

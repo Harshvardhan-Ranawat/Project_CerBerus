@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3.1.1 Use Case Diagram</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: white;}
+        .mermaid { margin: 0 auto; display: flex; justify-content: center; }
+        h2 { color: #333; }
+        p { color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h2>3.1.1 Use Case Diagram of Cerberus File Monitoring</h2>
+    <p><i>(Take a screenshot of this diagram and paste it into your Word Document)</i></p>
+    <br>
+    
+    <pre class="mermaid">
+flowchart LR
+    %% Actors
+    Attacker((Attacker / Insider))
+    Admin((System Administrator))
+    
+    %% System Boundary
+    subgraph Cerberus Endpoint Deception System
+        UC1([Trigger Unauthorized File Access])
+        UC2([Intercept Event 5145 via OS Logs])
+        UC3([Calculate Threat Risk Score])
+        UC4([Write JSON Log Data])
+        UC5([Dispatch Telegram Notification])
+        UC6([Visualize Attack Data on Dashboard])
+    end
+    
+    %% Relationships
+    Attacker ----> UC1
+    UC1 -.-> |Prompts Audit log| UC2
+    UC2 ----> UC3
+    UC3 ----> UC4
+    UC3 ----> UC5
+    
+    UC5 ----> |Delivers Mobile Alert| Admin
+    Admin ----> |Reviews Analytics| UC6
+    </pre>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: false, htmlLabels: true }
+        });
+    </script>
+</body>
+</html>

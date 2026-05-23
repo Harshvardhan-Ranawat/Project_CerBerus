@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3.1.2 Activity Diagram</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: white;}
+        .mermaid { margin: 0 auto; display: flex; justify-content: center; }
+        h2 { color: #333; }
+        p { color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h2>3.1.2 Activity Diagram of Cerberus Workflow</h2>
+    <p><i>(Take a screenshot of this diagram and paste it into your Word Document)</i></p>
+    <br>
+    
+    <pre class="mermaid">
+flowchart TD
+    Start([Start Cerberus Service]) --> Init[Initialize Windows Event Listener]
+    Init --> Poll{New Event \nDetected?}
+    
+    Poll -- No --> Poll
+    Poll -- Yes --> CheckFile{Target File == \nHoneyfile?}
+    
+    CheckFile -- No --> Poll
+    CheckFile -- Yes --> Analyze[Extract Username, Source IP, & Action]
+    
+    Analyze --> Calc[Calculate Risk Score Based on Duration]
+    Calc --> Log[Write JSON Data to alerts.log]
+    Log --> Alert[Trigger Telegram API Alert Request]
+    Alert --> End([Return to Listening state])
+    End --> Poll
+    </pre>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>
