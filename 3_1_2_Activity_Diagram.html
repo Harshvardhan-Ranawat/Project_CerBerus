@@ -2,40 +2,156 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>3.1.2 Activity Diagram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.1.2 Activity Diagram – Project Cerberus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: white;}
-        .mermaid { margin: 0 auto; display: flex; justify-content: center; }
-        h2 { color: #333; }
-        p { color: #666; font-size: 14px; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            padding: 32px 48px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 28px;
+            font-style: italic;
+        }
+
+        .diagram-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            background: #f8fafc;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .diagram-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 10px 16px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #2563eb;
+        }
+
+        pre.code-block {
+            margin: 0;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 18px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            border: 1px solid #334155;
+            border-top: none;
+        }
     </style>
 </head>
 <body>
-    <h2>3.1.2 Activity Diagram of Cerberus Workflow</h2>
-    <p><i>(Take a screenshot of this diagram and paste it into your Word Document)</i></p>
-    <br>
-    
-    <pre class="mermaid">
-flowchart TD
-    Start([Start Cerberus Service]) --> Init[Initialize Windows Event Listener]
-    Init --> Poll{New Event \nDetected?}
-    
-    Poll -- No --> Poll
-    Poll -- Yes --> CheckFile{Target File == \nHoneyfile?}
-    
-    CheckFile -- No --> Poll
-    CheckFile -- Yes --> Analyze[Extract Username, Source IP, & Action]
-    
-    Analyze --> Calc[Calculate Risk Score Based on Duration]
-    Calc --> Log[Write JSON Data to alerts.log]
-    Log --> Alert[Trigger Telegram API Alert Request]
-    Alert --> End([Return to Listening state])
-    End --> Poll
-    </pre>
 
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    <h2>3.1.2 &nbsp;Activity Diagram – Cerberus Workflow</h2>
+    <p class="subtitle">Project Cerberus · Honeyfile Intrusion Detection System</p>
+
+    <!-- Interactive Diagram View -->
+    <div class="diagram-container">
+        <img class="diagram-img" src="http://www.plantuml.com/plantuml/svg/~1ZdFBSwMxEAXge37FO0kLUlBvFdHaVqyISrdSBC9x-3YbmiY6mbXWX2_aRaF4S4ZvyMzLVVIr2qy9UaeeOOud9E4xKNV9Ot1i5Gwtdo1YYUh5ozQJ8yiryseNMfteY_qT4NRZ776JuQuLuEmvYfzJoLh3SRko58YI32mzBlyFzgM3aMmIylK5uOxClwzovDB1s2rdzEpNxY3Ls11c4DYGbqt8-a-B_vhLxZaK50QJds1jFLGRkpg84Wi_VAznv3hofdl4q8TUpRWKMgpfw7VNXCAGjBqxB34uLtu74vEBI6sWGmE9RVPPx_pPzcTVNQUzeu6TGzxNMNg5TPnRMGlL6RNzCrGdnWHhKnNYbWv50J9SGwm7B9s4XahRaJ78L1VslruAOt3dn8R3c5Wbm7X_AQ" alt="3.1.2 Activity Diagram of Cerberus Workflow">
+    </div>
+
+    <!-- PlantUML Source Code Block -->
+    <div>
+        <div class="code-header">
+            <span>PlantUML Source Code</span>
+            <button class="copy-btn" onclick="copyPlantUML()">Copy Code</button>
+        </div>
+        <pre class="code-block" id="puml-code">@startuml
+title 3.1.2 Activity Diagram of Cerberus Workflow
+
+start
+
+:Initialize Windows\nEvent Listener;
+
+repeat
+
+  if (New Event Detected?) then (Yes)
+    if (Target File == Honeyfile?) then (Yes)
+      :Extract Username, Source IP & Action;
+      :Calculate Risk Score\nBased on Duration;
+      :Write JSON Data to alerts.log;
+      :Trigger Telegram API Alert Request;
+    else (No)
+    endif
+  else (No)
+  endif
+
+  :Return to Listening State;
+
+repeat while ()
+
+stop
+@enduml</pre>
+    </div>
+
+    <script>
+        function copyPlantUML() {
+            const codeText = document.getElementById('puml-code').innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerText = 'Copied!';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    btn.innerText = 'Copy Code';
+                    btn.style.background = '#3b82f6';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
     </script>
+
 </body>
 </html>

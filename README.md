@@ -23,14 +23,15 @@ flowchart TD
     Poll -- No --> Poll
     Poll -- Yes --> CheckFile{Target File == \nHoneyfile?}
     
-    CheckFile -- No --> Poll
-    CheckFile -- Yes --> Analyze[Extract Username, Source IP, & Action]
+    CheckFile -- No --> LoopEnd[Return to Listening State]
+    CheckFile -- Yes --> Analyze[Extract Username, Source IP & Action]
     
-    Analyze --> Calc[Calculate Risk Score Based on Duration]
+    Analyze --> Calc[Calculate Risk Score \nBased on Duration]
     Calc --> Log[Write JSON Data to alerts.log]
     Log --> Alert[Trigger Telegram API Alert Request]
-    Alert --> End([Return to Listening state])
-    End --> Poll
+    Alert --> LoopEnd
+    
+    LoopEnd --> Poll
 ```
 
 ### 1. Unified Threat Sequence (Remote SMB Access example)
